@@ -9,6 +9,14 @@ import UIKit
 import Photos
 
 class ViewController: UIViewController, IOSGalleryPickerDelegate, AlbumPickerDelegate {
+    func onEndMultipleSelection(assets: [GPAsset], vc: IOSGalleryPickerViewController) {
+        
+    }
+    
+    func onEndSingleSelection(asset: GPAsset, vc: IOSGalleryPickerViewController) {
+        
+    }
+    
     func onSelectAlbum(_ album: GPAlbum) {
         print("selected album",album.title)
     }

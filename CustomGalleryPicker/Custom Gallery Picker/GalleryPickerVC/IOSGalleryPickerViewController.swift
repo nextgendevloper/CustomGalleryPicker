@@ -14,6 +14,7 @@ class IOSGalleryPickerViewController: UIViewController, AlbumPickerDelegate {
     func onSelectAlbum(_ album: GPAlbum) {
         print("selected Album")
         selectedAlbum(album)
+        
     }
     
     
@@ -220,8 +221,21 @@ extension IOSGalleryPickerViewController:UICollectionViewDelegate, UICollectionV
         //get asset from ArrayOfAasset
         if let asset = currentAlbum?.fetchResult.object(at: indexPath.item){
             cell.configure(at: indexPath, for: convertToGPAsset(asset: asset))
+//            selectedAssets.forEach { gpAsset in
+//                if gpAsset.iD == asset.localIdentifier{
+//                    cell.selectedCell()
+//                }
+//            }
+            if let asset = selectedAssetsMap[asset.localIdentifier] {
+                cell.selectedCell()
+                collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
+            }else {
+                cell.deSelectedCell()
+            }
+           
         }
-
+         
+        
 //        cell.asset lies inside selectdAsset {
 //            cell.isSelected = true
 //        }false
@@ -230,14 +244,20 @@ extension IOSGalleryPickerViewController:UICollectionViewDelegate, UICollectionV
     }
     
     
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? ImagePickerCell{
-            if let asset = currentAlbum?.fetchResult.object(at: indexPath.item){
-                cell.willDisplay(at: indexPath, for: convertToGPAsset(asset: asset))
-            }
-
-        }
-    }
+//    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+//        if let cell = collectionView.cellForItem(at: indexPath) as? ImagePickerCell{
+//            cell.showLoader()
+//
+//            if let asset = currentAlbum?.fetchResult.object(at: indexPath.item){
+//                selectedAssets.forEach { gpAsset in
+//                    if gpAsset.iD == asset.localIdentifier{
+//                        cell.selectedCell()
+//                    }
+//                }
+//            }
+//
+//        }
+//    }
     
 
 
@@ -255,7 +275,8 @@ extension IOSGalleryPickerViewController:UICollectionViewDelegate, UICollectionV
          
          */
        
-        if selectedAssets.count > configuration.assetMaaxSelection {
+        if selectedAssets.count >= configuration.assetMaaxSelection {
+          
             return false
         }
        // delegate?.onUserReachedMaxLimit(vc:self)
@@ -263,6 +284,10 @@ extension IOSGalleryPickerViewController:UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+//        if selectedAssets.count == configuration.assetMaaxSelection{
+//            return
+//        }
         //create cell for indexpath
         if let cell = collectionView.cellForItem(at: indexPath) as? ImagePickerCell{
             //get asset from album at corresponding indexPath
@@ -270,19 +295,37 @@ extension IOSGalleryPickerViewController:UICollectionViewDelegate, UICollectionV
             {
                return
            }
+            
+          
+            
             //create GPAsset from asset
            let gpAsset = convertToGPAsset(asset: asset)
             //if multiple Asset is allowed then add asset as gpAsset in selected asset
-            if isMultipleSelectionAllowed{
-                cell.selectedCell()
-                selectedAssets.append(gpAsset)
-            }
-            //else call delegate and pass asset and dismiss own vc and stop caching of images
-            else{
-                delegate?.onEndSingleSelection(asset: gpAsset, vc: self)
-                GalleryManager.shared.stopCAchingForAllAssets()
-                dismiss(animated: true)
-            }
+//            if !selectedAssets.contains(where: {$0.iD == gpAsset.iD}){
+                if isMultipleSelectionAllowed{
+                    cell.selectedCell()
+                    selectedAssets.append(gpAsset)
+                    selectedAssetsMap[gpAsset.iD] = gpAsset
+                }
+                //else call delegate and pass asset and dismiss own vc and stop caching of images
+                else{
+                    delegate?.onEndSingleSelection(asset: gpAsset, vc: self)
+                    GalleryManager.shared.stopCAchingForAllAssets()
+                    //                dismiss(animated: true)
+                }
+//            }
+//            else{
+//                print("Cell is selected")
+////                collectionView.deselectItem(at: indexPath, animated: true)
+//                cell.deSelectedCell()
+//                guard let asset = currentAlbum?.fetchResult.object(at: indexPath.item) else{return}
+//                if let index = selectedAssets.firstIndex(where: {$0.iD == asset.localIdentifier}) {
+//                    selectedAssets.remove(at: index)
+//                    selectedAssetsMap.removeValue(forKey: asset.localIdentifier)
+//                    
+//                    print("remove asset",index)
+//                }
+//            }
         }
 
     }
@@ -290,8 +333,21 @@ extension IOSGalleryPickerViewController:UICollectionViewDelegate, UICollectionV
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if let cell = collectionView.cellForItem(at: indexPath) as? ImagePickerCell{
             cell.deSelectedCell()
+            guard let asset = currentAlbum?.fetchResult.object(at: indexPath.item) else{return}
+            if let index = selectedAssets.firstIndex(where: {$0.iD == asset.localIdentifier}) {
+                selectedAssets.remove(at: index)
+                selectedAssetsMap.removeValue(forKey: asset.localIdentifier)
+
+                print("remove asset",index)
+            }
+
         }
     }
+    
+        /*
+         selectCell(cell)
+         deselectCell(cell)
+         */
     
     
     

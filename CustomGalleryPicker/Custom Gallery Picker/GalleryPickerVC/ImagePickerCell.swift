@@ -17,14 +17,16 @@ class ImagePickerCell: UICollectionViewCell {
     //    let originalAssetId = 0
     let loader = UIActivityIndicatorView()
     var requestId : PHImageRequestID?
-    
+    override func awakeFromNib() {
+        //imageView.image = nil
+    }
     override init(frame: CGRect) {
         super.init(frame: frame)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         loader.color = .white
-        overlayView.backgroundColor = .black
-        overlayView.alpha = 0.4
+        overlayView.backgroundColor = .green
+        overlayView.alpha = 0.6
         overlayView.isHidden = true
         //        imageView.isUserInteractionEnabled = true
         //        loader.isUserInteractionEnabled = true
@@ -70,7 +72,9 @@ class ImagePickerCell: UICollectionViewCell {
     }
     
     func showLoader(){
-        loader.isHidden = false
+     //   if imageView.image == nil {
+            loader.isHidden = false
+      //  }
     }
     
     func hideLoader(){
@@ -82,20 +86,21 @@ class ImagePickerCell: UICollectionViewCell {
         GalleryManager.shared.cancelFetching(index: index)
     }
     
+//    func configure(at indexPath:IndexPath,for asset:GPAsset){
+//        // show loader
+//      //  showLoader()
+////        self.imageView.image = nil
+//        //store indexPath, and asset id in local variable to check
+////        originalIndexPath = indexPath
+////        originalAsset = asset
+//        
+//    }
     func configure(at indexPath:IndexPath,for asset:GPAsset){
-        // show loader
-        showLoader()
+//         show loader
         self.imageView.image = nil
-        //store indexPath, and asset id in local variable to check
-        originalIndexPath = indexPath
-        originalAsset = asset
+        showLoader()
         
-    }
-    func willDisplay(at indexPath:IndexPath,for asset:GPAsset){
-        // show loader
-        showLoader()
-        self.imageView.image = nil
-        //store indexPath, and asset id in local variable to check
+//        store indexPath, and asset id in local variable to check
         originalIndexPath = indexPath
         originalAsset = asset
         asset.fetchImage(with: indexPath) { image, error,index,localID in
@@ -109,9 +114,11 @@ class ImagePickerCell: UICollectionViewCell {
     }
     func selectedCell(){
         overlayView.isHidden = false
+        
     }
     func deSelectedCell(){
         overlayView.isHidden = true
+//        self.isSelected = true
     }
     
 }

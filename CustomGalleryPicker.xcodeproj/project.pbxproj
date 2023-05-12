@@ -37,6 +37,8 @@
 		A072903B29F1265A0075A981 /* ImagePickerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A072903829F1265A0075A981 /* ImagePickerCell.swift */; };
 		A072903D29F135A30075A981 /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A072903C29F135A30075A981 /* PhotoDataSource.swift */; };
 		A072903F29F14F680075A981 /* IOSGalleryPickerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A072903E29F14F680075A981 /* IOSGalleryPickerViewController.xib */; };
+		A07AD2BD2A08D97C00F56CC7 /* PermissionPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07AD2BC2A08D97C00F56CC7 /* PermissionPage.xib */; };
+		A07AD2BF2A08E63100F56CC7 /* LimitPermissionAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = A07AD2BE2A08E63100F56CC7 /* LimitPermissionAlert.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -91,6 +93,8 @@
 		A072903829F1265A0075A981 /* ImagePickerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerCell.swift; sourceTree = "<group>"; };
 		A072903C29F135A30075A981 /* PhotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
 		A072903E29F14F680075A981 /* IOSGalleryPickerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IOSGalleryPickerViewController.xib; sourceTree = "<group>"; };
+		A07AD2BC2A08D97C00F56CC7 /* PermissionPage.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PermissionPage.xib; sourceTree = "<group>"; };
+		A07AD2BE2A08E63100F56CC7 /* LimitPermissionAlert.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LimitPermissionAlert.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,11 +196,7 @@
 		A072900329F125A50075A981 /* CustomGalleryPicker */ = {
 			isa = PBXGroup;
 			children = (
-				A06A4F4D2A04D87A0000A961 /* Delegatees */,
-				A06A4F4C2A04D8440000A961 /* GalleryPickerVC */,
-				A06A4F492A023EF50000A961 /* FetchClass */,
-				A06A4F3329FF80A30000A961 /* Album View Controller */,
-				A06A4F2629F657A20000A961 /* CustomPicker */,
+				A07AD2C02A0E03AD00F56CC7 /* Custom Gallery Picker */,
 				A072903529F1265A0075A981 /* CustomImagePicker */,
 				A072900429F125A50075A981 /* AppDelegate.swift */,
 				A072900629F125A50075A981 /* SceneDelegate.swift */,
@@ -236,6 +236,28 @@
 				A06A4F2B29FA76580000A961 /* IOSGalleryPickerVM.swift */,
 			);
 			path = CustomImagePicker;
+			sourceTree = "<group>";
+		};
+		A07AD2BB2A08D95700F56CC7 /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				A07AD2BC2A08D97C00F56CC7 /* PermissionPage.xib */,
+				A07AD2BE2A08E63100F56CC7 /* LimitPermissionAlert.xib */,
+			);
+			path = Alert;
+			sourceTree = "<group>";
+		};
+		A07AD2C02A0E03AD00F56CC7 /* Custom Gallery Picker */ = {
+			isa = PBXGroup;
+			children = (
+				A07AD2BB2A08D95700F56CC7 /* Alert */,
+				A06A4F4D2A04D87A0000A961 /* Delegatees */,
+				A06A4F4C2A04D8440000A961 /* GalleryPickerVC */,
+				A06A4F492A023EF50000A961 /* FetchClass */,
+				A06A4F3329FF80A30000A961 /* Album View Controller */,
+				A06A4F2629F657A20000A961 /* CustomPicker */,
+			);
+			path = "Custom Gallery Picker";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,10 +365,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A072901129F125A60075A981 /* LaunchScreen.storyboard in Resources */,
+				A07AD2BF2A08E63100F56CC7 /* LimitPermissionAlert.xib in Resources */,
 				A072900E29F125A60075A981 /* Assets.xcassets in Resources */,
 				A06A4F4029FFC47B0000A961 /* AlbumCVCell.xib in Resources */,
 				A06A4F3A29FF81110000A961 /* AlbumViewVC.xib in Resources */,
 				A072900C29F125A50075A981 /* Main.storyboard in Resources */,
+				A07AD2BD2A08D97C00F56CC7 /* PermissionPage.xib in Resources */,
 				A072903F29F14F680075A981 /* IOSGalleryPickerViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
